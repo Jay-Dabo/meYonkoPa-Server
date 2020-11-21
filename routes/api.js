@@ -25,7 +25,7 @@ const Article = require('../controllers/articleController');
 
 // Root for endpoints
 router.get('/', (req, res) => {
-    res.send('Owambe API route root')
+    res.send('meYonkoPa API route root')
 });
 
 // Routings for Users
