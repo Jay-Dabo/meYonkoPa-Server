@@ -14,7 +14,7 @@ const professionalSchema = new Schema({
     email: { type: String, lowercase: true, match: [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/], unique: true, required: true },
     gender: { type: String },
     profession: { type: Schema.Types.String, ref: 'medicalField', default: 'Counselor' },
-    institute: { type: String },
+    institute: { type: String, default: 'null' },
     phone_number: { type: String, required: true },
     password: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
     password_confirmation: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
