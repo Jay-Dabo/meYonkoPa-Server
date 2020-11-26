@@ -53,7 +53,7 @@ exports.register = function(req, res) {
     if (!professionalData.phone_number) {
         return res.status(422).send('Please provide your Phone Number')
     }
-    if (!professionalData.medicalField) {
+    if (!professionalData.profession) {
         return res.status(422).send('Please provide your Field of Practice')
     }
     if (!professionalData.password) {
