@@ -8,7 +8,7 @@ const healthTopicSchema = new Schema({
     _id: { type: String },
     name: { type: String, unique: true, required: true },
     description: { type: String, required: true },
-    field: { type: Schema.Types.String, ref: 'field' },
+    medical_field: { type: Schema.Types.String, ref: 'medicalField', default: 'General' },
 })
 
 // Export Model with the Category schema into Category Collection on MongoDb

@@ -26,8 +26,8 @@ exports.update = function(req, res) {
 
 exports.one = function(req, res) {
     Article.findById(req.params._id)
-        .populate('healthTopic')
-        .populate('professional')
+        .populate('category')
+        .populate('author')
         .exec(function(error, article) {
             if (error) {
                 return res.status(404).send('Sorry!! The queried Article could not be found or does not exist in our database')

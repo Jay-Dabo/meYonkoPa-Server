@@ -26,7 +26,7 @@ exports.update = function(req, res) {
 
 exports.one = function(req, res) {
     Professional.findById(req.params._id)
-        .populate('field')
+        .populate('profession')
         .exec(function(error, professional) {
             if (error) {
                 return res.status(404).send('Sorry!! The queried Professional could not be found or does not exist in our database')
@@ -53,7 +53,7 @@ exports.register = function(req, res) {
     if (!professionalData.phone_number) {
         return res.status(422).send('Please provide your Phone Number')
     }
-    if (!professionalData.field) {
+    if (!professionalData.medicalField) {
         return res.status(422).send('Please provide your Field of Practice')
     }
     if (!professionalData.password) {

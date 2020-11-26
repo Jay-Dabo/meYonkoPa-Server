@@ -8,8 +8,8 @@ const articleSchema = new Schema({
     _id: { type: String },
     title: { type: String, unique: true, required: true },
     content: { type: String, required: true },
-    healthTopic: { type: Schema.Types.String, ref: 'healthTopic' },
-    professional: { type: Schema.Types.String, ref: 'professional' },
+    category: { type: Schema.Types.String, ref: 'healthTopic', default: 'G.Health' },
+    author: { type: Schema.Types.String, ref: 'professional', default: 'meYonkoPa' },
 })
 
 // Export Model with the Category schema into Category Collection on MongoDb

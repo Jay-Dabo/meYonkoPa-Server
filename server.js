@@ -37,5 +37,5 @@ app.use((error, req, res, next) => {
 })
 
 app.listen(process.env.PORT || PORT, function(){
-	console.log('meyonkoPa Server running on PORT; ' + PORT)
+	console.log('meyonkoPa Server running on PORT: ' + PORT)
 })

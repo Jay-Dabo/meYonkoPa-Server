@@ -19,7 +19,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreat
 // Import Controller files
 const User = require('../controllers/userController');
 const Professional = require('../controllers/professionalController');
-const Field = require('../controllers/fieldController');
+const MedicalField = require('../controllers/medicalFieldController');
 const HealthTopic = require('../controllers/healthTopicController');
 const Article = require('../controllers/articleController');
 
@@ -45,11 +45,13 @@ router.delete('/professionals/:_id', Professional.delete);
 router.post('/professional/register', Professional.register);
 
 // Routing for Medical Fields
-router.get('/fields', Field.all);
-router.post('/field/new', Field.new);
+router.get('/medical-fields', MedicalField.all);
+router.get('/medical-fields/:_id', MedicalField.one);
+router.post('/medical-field/new', MedicalField.new);
 
 // Routing for Health Topics
 router.get('/health-topics', HealthTopic.all);
+router.get('/health-topics/:_id', HealthTopic.one);
 router.post('/health-topic/new', HealthTopic.new);
 
 // Routings for Articles

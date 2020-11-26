@@ -11,12 +11,11 @@ const professionalSchema = new Schema({
     other_names: { type: String },
     last_name: { type: String, required: true },
     gender: { type: String },
-    field: { type: Schema.Types.String, ref: 'field' },
+    profession: { type: Schema.Types.String, ref: 'medicalField', default: 'Counselor' },
     institute: { type: String },
     email: { type: String, lowercase: true, match: [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/], unique: true, required: true },
     phone_number: { type: String, required: true },
-    birth_date: { type: Date, format: 'YYYY-mm-dd' },
-    is_active: { type: Boolean, default: false },
+    is_consultant: { type: Boolean, default: false },
     password: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
     password_confirmation: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
 },
@@ -34,7 +33,7 @@ professionalSchema.pre('save', function(next) {
             if (error) {
                 return res.status(422).send('There is an error with password hashing')
             }
-            // Replace Password field values with hashed password
+            // Replace Password medicalField values with hashed password
             professional.password = hash
             professional.password_confirmation = hash
             next()
