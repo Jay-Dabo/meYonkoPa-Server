@@ -48,9 +48,9 @@ exports.register = function(req, res) {
     // if (!userData.last_name) {
     //     return res.status(422).send('Please provide your Last Name')
     // }
-    // if (!userData.email) {
-    //     return res.status(422).send('Please provide your Email Address')
-    // }
+    if (!userData.age_range) {
+        return res.status(422).send('Please select your appropriate Age Range')
+    }
     if (!userData.phone_number) {
         return res.status(422).send('Please provide your Phone Number')
     }

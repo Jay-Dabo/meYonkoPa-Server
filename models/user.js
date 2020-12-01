@@ -2,19 +2,38 @@ const mongoose = require('mongoose'); // Require Mongooge for connection to Data
 const Schema = mongoose.Schema // Require Schema Instace of Mongoose
 const bcrypt = require('bcryptjs'); // Require BCrypt for Password encryption
 
+// Censorship Enumerations
+const ageRanges = Object.freeze({
+    Child: '10 to 15 years',
+    Teen: '16 to 19 years',
+    Adult: '20 to 35 years',
+});
+
+// Gender Enumerations
+const genders = Object.freeze({
+    Male: 'Male',
+    Female: 'Female',
+    Other: 'Non Binary',
+});
+
 // Create Schema for Users in MongoDb
 const userSchema = new Schema({
     username: { type: String, lowercase: true, required: true },
-    gender: { type: String },
+    gender: { type: String, required: true, enum: Object.values(genders) },
     // email: { type: String, lowercase: true, match: [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/], unique: true, required: true },
     phone_number: { type: String, required: true },
-    birth_date: { type: Date, format: 'YYYY-mm-dd' },
+    age_range: { type: String, required: true, enum: Object.values(ageRanges) },
     is_active: { type: Boolean, default: false },
     password: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
     password_confirmation: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
 },
 { 
     timestamps: true 
+});
+
+Object.assign(userSchema.statics, {
+    ageRanges,
+    genders
 });
 
 userSchema.pre('save', function(next) {
