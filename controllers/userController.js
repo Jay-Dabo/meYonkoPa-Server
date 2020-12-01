@@ -18,7 +18,7 @@ exports.all = function(req, res) {
 exports.update = function(req, res) {
     let userData = req.body
 
-    User.findByIdAndUpdate(req.params._id, { $set: userData }, function(error, user) {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: userData }, function(error, user) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your update request')
         } else {
@@ -28,7 +28,7 @@ exports.update = function(req, res) {
 }
 
 exports.one = function(req, res) {
-    User.findById(req.params._id, function(error, user) {
+    User.findOne({ username: req.params.username }, function(error, user) {
             if (error) {
                 return res.status(404).send('Sorry!! The queried User could not be found or does not exist in our database')
             } else {
@@ -42,15 +42,15 @@ exports.register = function(req, res) {
     let userData = req.body
 
     // Presence Verification
-    if (!userData.first_name) {
-        return res.status(422).send('Please provide your First Name')
+    if (!userData.username) {
+        return res.status(422).send('Please provide your Username')
     }
-    if (!userData.last_name) {
-        return res.status(422).send('Please provide your Last Name')
-    }
-    if (!userData.email) {
-        return res.status(422).send('Please provide your Email Address')
-    }
+    // if (!userData.last_name) {
+    //     return res.status(422).send('Please provide your Last Name')
+    // }
+    // if (!userData.email) {
+    //     return res.status(422).send('Please provide your Email Address')
+    // }
     if (!userData.phone_number) {
         return res.status(422).send('Please provide your Phone Number')
     }
@@ -64,7 +64,7 @@ exports.register = function(req, res) {
     }
 
     // Registered User Check
-    User.findOne({ email: userData.email }, function(error, registeredUser) {
+    User.findOne({$or: [{phone_number: userData.phone_number}, {username: userData.username}]}, function(error, registeredUser) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your registration')
         }
@@ -107,15 +107,15 @@ exports.login = function(req, res) {
     let userData = req.body
 
     // Presence Verification
-    if (!userData.email) {
-        return res.status(422).send('Please provide your email address')
+    if (!userData.username || !userData.phone_number) {
+        return res.status(422).send('Please provide your username or phone number')
     }
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
 
 
-    User.findOne({ email: userData.email }, (error, user) => {
+    User.findOne({$or: [{ phone_number: userData.phone_number }, { username: userData.username }]}, (error, user) => {
         if (error) {
             return res.status(422).send('Oops! Something went wrong. Please try again.')
         }
@@ -133,7 +133,7 @@ exports.login = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-    User.findByIdAndRemove(req.params._id, function(error, result) {
+    User.findOneAndRemove({ username: req.params.username }, function(error, result) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your delete request')
         } else {

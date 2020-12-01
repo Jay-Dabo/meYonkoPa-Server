@@ -30,10 +30,10 @@ router.get('/', (req, res) => {
 
 // Routings for Users
 router.get('/users', User.all);
-router.get('/users/:_id', User.one);
+router.get('/users/:username', User.one);
 router.post('/user/login', User.login);
-router.patch('/users/:_id', User.update);
-router.delete('/users/:_id', User.delete);
+router.patch('/users/:username', User.update);
+router.delete('/users/:username', User.delete);
 router.post('/user/register', User.register);
 
 // Routings for Professionals
