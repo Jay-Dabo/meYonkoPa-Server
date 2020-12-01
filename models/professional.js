@@ -1,12 +1,11 @@
 const mongoose = require('mongoose'); // Require Mongooge for connection to Database
 const Schema = mongoose.Schema // Require Schema Instace of Mongoose
 const bcrypt = require('bcryptjs'); // Require BCrypt for Password encryption
-const cryptoRandomString = require('crypto-random-string'); // Use Cryptographic Random String or ID Generation
 
 
 // Create Schema for Professionals in MongoDb
 const professionalSchema = new Schema({
-    _id: { type: String, default: 'myp' + cryptoRandomString({ length: 5 }) },
+    _id: { type: String },
     title: { type: String, required: true, default: 'Counselor' },
     first_name: { type: String, required: true },
     other_names: { type: String },

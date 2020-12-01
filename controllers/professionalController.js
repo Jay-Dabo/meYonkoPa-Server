@@ -1,3 +1,6 @@
+// Use Cryptographic Random String or ID Generation
+const cryptoRandomString = require('crypto-random-string');
+
 // Model Imports
 const Professional = require('../models/professional');
 
@@ -39,6 +42,7 @@ exports.one = function(req, res) {
 
 exports.register = function(req, res) {
     let professionalData = req.body
+    professionalData._id = 'myp' + cryptoRandomString({ length: 5 })
 
     // Presence Verification
     if (!professionalData.first_name) {
@@ -63,7 +67,7 @@ exports.register = function(req, res) {
     }
 
     // Registered Professional Check
-    Professional.findOne({$or: [{ email: professionalData.email }, { _id: new Professional(professionalData._id) }]}, function(error, registeredProfessional) {
+    Professional.findOne({ email: professionalData.email }, function(error, registeredProfessional) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your registration')
         }
@@ -75,6 +79,7 @@ exports.register = function(req, res) {
             professional.save((error, registeredProfessional) => {
                 if (error) {
                     return res.status(400).json(error)
+                    console.log(error)
                 } else {
                     return res.status(200).json(registeredProfessional)
                 }
