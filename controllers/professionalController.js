@@ -63,7 +63,7 @@ exports.register = function(req, res) {
     }
 
     // Registered Professional Check
-    Professional.findOne({ email: professionalData.email }, function(error, registeredProfessional) {
+    Professional.findOne({$or: [{ email: professionalData.email }, { _id: new Professional(professionalData._id) }]}, function(error, registeredProfessional) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your registration')
         }
