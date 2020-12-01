@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Require Mongooge for connection to Data
 const Schema = mongoose.Schema // Require Schema Instace of Mongoose
 const bcrypt = require('bcryptjs'); // Require BCrypt for Password encryption
 
-// Censorship Enumerations
+// Age Enumerations
 const ageRanges = Object.freeze({
     Child: '10 to 15 years',
     Teen: '16 to 19 years',
