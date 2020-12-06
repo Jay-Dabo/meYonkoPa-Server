@@ -18,10 +18,12 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreat
 
 // Import Controller files
 const User = require('../controllers/userController');
+const AgeRange  = require('../controllers/ageRangeController');
 const Professional = require('../controllers/professionalController');
 const MedicalField = require('../controllers/medicalFieldController');
 const HealthTopic = require('../controllers/healthTopicController');
 const Article = require('../controllers/articleController');
+const Consult = require('../controllers/consultController');
 
 // Root for endpoints
 router.get('/', (req, res) => {
@@ -44,6 +46,13 @@ router.patch('/professionals/:_id', Professional.update);
 router.delete('/professionals/:_id', Professional.delete);
 router.post('/professional/register', Professional.register);
 
+// Routes for Categories
+router.get('/ageRanges', AgeRange.all);
+router.post('/ageRange/new', AgeRange.new);
+router.get('/ageRanges/:_id', AgeRange.one);
+router.patch('/ageRanges/:_id', AgeRange.update);
+router.delete('/ageRanges/:_id', AgeRange.delete);
+
 // Routing for Medical Fields
 router.get('/medical-fields', MedicalField.all);
 router.get('/medical-fields/:_id', MedicalField.one);
@@ -60,5 +69,9 @@ router.post('/article/new', Article.new);
 router.get('/articles/:_id', Article.one);
 router.patch('/articles/:_id', Article.update);
 router.delete('/articles/:_id', Article.delete);
+router.get('/article/:censor', Article.common);
+
+// Test Routings for Chats
+router.get('/consult-professional', Consult.consultProfessional)
 
 module.exports = router

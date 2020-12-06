@@ -28,7 +28,9 @@ exports.update = function(req, res) {
 }
 
 exports.one = function(req, res) {
-    User.findOne({ username: req.params.username }, function(error, user) {
+    User.findOne({ username: req.params.username })
+    .populate('age_range')
+    .exec(function(error, user) {
             if (error) {
                 return res.status(404).send('Sorry!! The queried User could not be found or does not exist in our database')
             } else {

@@ -12,6 +12,7 @@ const genders = Object.freeze({
 // Create Schema for Professionals in MongoDb
 const professionalSchema = new Schema({
     _id: { type: String },
+    chatname: { type: String, required: true },
     title: { type: String, default: 'Counselor' },
     first_name: { type: String, required: true },
     other_names: { type: String },
@@ -23,7 +24,13 @@ const professionalSchema = new Schema({
     phone_number: { type: String, required: true },
     password: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
     password_confirmation: { type: String, min: [8, 'Too short, min 4 characters are required'], required: true },
-    is_consultant: { type: Boolean, default: false }
+    is_consultant: { type: Boolean, default: false },
+
+    // Conversation Schema
+    chatList: [{
+        receiverName: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+        message: { type: mongoose.Schema.Types.ObjectId, ref: 'message' }
+    }],
 },
 { 
     timestamps: true 

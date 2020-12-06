@@ -12,6 +12,16 @@ exports.all = function(req, res) {
     });
 }
 
+exports.common = function(req, res) {
+    Article.find({ censor: req.params.censor }, function(error, articles) {
+        if (error) {
+            return res.status(422).send('Sorry no Article currently exists for this category')
+        } else {
+            return res.status(200).json(articles)
+        }
+    });
+}
+
 exports.update = function(req, res) {
     let articleData = req.body
 
@@ -28,6 +38,7 @@ exports.one = function(req, res) {
     Article.findById(req.params._id)
         .populate('category')
         .populate('author')
+        .populate('censor')
         .exec(function(error, article) {
             if (error) {
                 return res.status(404).send('Sorry!! The queried Article could not be found or does not exist in our database')

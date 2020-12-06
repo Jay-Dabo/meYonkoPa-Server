@@ -43,6 +43,11 @@ exports.one = function(req, res) {
 exports.register = function(req, res) {
     let professionalData = req.body
     professionalData._id = 'myp' + cryptoRandomString({ length: 5 })
+    
+    // Counselor chatname creation
+    if (professionalData.is_consultant === true) {
+        professionalData.chatname = professionalData.title + ' ' + professionalData.first_name + ' ' + professionalData.last_name
+    }
 
     // Presence Verification
     if (!professionalData.first_name) {
