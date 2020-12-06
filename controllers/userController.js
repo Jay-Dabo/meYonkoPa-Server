@@ -104,17 +104,21 @@ exports.register = function(req, res) {
 
 exports.login = function(req, res) {
     let userData = req.body
+    var userid;
+    // let credential = () => {
+    // }
 
     // Presence Verification
-    // if (!userData.username || !userData.phone_number) {
-    //     return res.status(422).send('Please provide your username or phone number')
-    // }
+    if (userid !== userData.username || userid !== userData.phone_number) {
+        return res.status(422).send('Please provide your username or phone number')
+    }
+    
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
 
 
-    User.findOne({$or: [{ phone_number: userData.phone_number }, { username: userData.username }]}, (error, user) => {
+    User.findOne({$or: [{ userid: userData.phone_number }, { userid: userData.username }]}, (error, user) => {
         if (error) {
             return res.status(422).send('Oops! Something went wrong. Please try again.')
         }
