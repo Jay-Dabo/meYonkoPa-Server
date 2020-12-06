@@ -106,9 +106,9 @@ exports.login = function(req, res) {
     let userData = req.body
 
     // Presence Verification
-    if (!userData.username || !userData.phone_number) {
-        return res.status(422).send('Please provide your username or phone number')
-    }
+    // if (!userData.username || !userData.phone_number) {
+    //     return res.status(422).send('Please provide your username or phone number')
+    // }
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
