@@ -48,3 +48,25 @@ exports.new = function(req, res) {
         }
     })
 }
+
+exports.update = function(req, res) {
+    let healthTopicData = req.body
+
+    HealthTopic.findByIdAndUpdate(req.params._id, { $set: healthTopicData }, function(error, healthTopic) {
+        if (error) {
+            return res.status(422).send('Oops! Something went wrong with your update request')
+        } else {
+            return res.status(200).json(healthTopic)
+        }
+    });
+}
+
+exports.delete = function(req, res) {
+    HealthTopic.findByIdAndRemove(req.params._id, function(error, result) {
+        if (error) {
+            return res.status(422).send('Oops! Something went wrong with your delete request')
+        } else {
+            return res.status(200).send('You have successfully deleted this healthTopic')
+        }
+    });
+}
