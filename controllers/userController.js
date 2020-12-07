@@ -44,15 +44,22 @@ exports.register = function(req, res) {
     let userData = req.body
 
     // Presence Verification
-    if (!userData.username) {
-        return res.status(422).send('Please provide your Username')
+    if (!userData.alias) {
+        return res.status(422).send('Please provide your Alias')
     }
+
     if (!userData.age_range) {
         return res.status(422).send('Please select your appropriate Age Range')
     }
+
+    if (!userData.email) {
+        return res.status(422).send('Please provide your Email Address')
+    }
+    
     if (!userData.phone_number) {
         return res.status(422).send('Please provide your Phone Number')
     }
+    
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
@@ -63,7 +70,7 @@ exports.register = function(req, res) {
     }
 
     // Registered User Check
-    User.findOne({$or: [{phone_number: userData.phone_number}, {username: userData.username}]}, function(error, registeredUser) {
+    User.findOne({$or: [{phone_number: userData.phone_number}, {email: userData.email}]}, function(error, registeredUser) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your registration')
         }
@@ -105,20 +112,23 @@ exports.register = function(req, res) {
 exports.login = function(req, res) {
     let userData = req.body
     var userid;
-    // let credential = () => {
-    // }
+    // let userid = userData.username
 
     // Presence Verification
-    if (userid !== userData.username || userid !== userData.phone_number) {
-        return res.status(422).send('Please provide your username or phone number')
-    }
+    // if (userid !== userData.email.value && userid !== userData.phone_number.value) {
+    //     return res.status(422).send('Please provide your email or phone number')
+    // }
+
+    // if (!userData.email) {
+    //     return res.status(422).send('Please provide your Email')
+    // }
     
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
 
 
-    User.findOne({$or: [{ userid: userData.phone_number }, { userid: userData.username }]}, (error, user) => {
+    User.findOne({$or: [{ userid: userData.phone_number }, { userid: userData.email }]}, (error, user) => {
         if (error) {
             return res.status(422).send('Oops! Something went wrong. Please try again.')
         }
