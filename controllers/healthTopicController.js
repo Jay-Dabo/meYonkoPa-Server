@@ -31,7 +31,7 @@ exports.new = function(req, res) {
 
     HealthTopic.findOne({ name: healthTopicData.name }, function(error, createdHealthTopic) {
         if (error) {
-            return res.status(422).send('Oops! Something went wrong with creating this Educational HealthTopic.')
+            return res.status(422).send('Oops! Something went wrong with creating this Health Topic.')
         }
 
         if (createdHealthTopic) {
@@ -66,7 +66,7 @@ exports.delete = function(req, res) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your delete request')
         } else {
-            return res.status(200).send('You have successfully deleted this healthTopic')
+            return res.status(200).send('You have successfully deleted this Health Topic')
         }
     });
 }
