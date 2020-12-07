@@ -18,7 +18,7 @@ const genders = Object.freeze({
 
 // Create Schema for Users in MongoDb
 const userSchema = new Schema({
-    alias: { type: String, lowercase: true, required: true},
+    alias: { type: String, required: true},
     gender: { type: String, required: true, enum: Object.values(genders) },
     email: { type: String, lowercase: true, match: [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/], unique: true, required: true },
     phone_number: { type: String, required: true, unique: true },
