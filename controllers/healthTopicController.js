@@ -26,6 +26,16 @@ exports.one = function(req, res) {
     );
 }
 
+exports.common = function(req, res) {
+    HealthTopic.find({ censor: req.params.censor }, function(error, healthTopics) {
+        if (error) {
+            return res.status(422).send('Sorry no Article currently exists for this category')
+        } else {
+            return res.status(200).json(healthTopics)
+        }
+    });
+}
+
 exports.new = function(req, res) {
     let healthTopicData = req.body
 
