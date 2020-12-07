@@ -18,7 +18,7 @@ exports.all = function(req, res) {
 exports.update = function(req, res) {
     let userData = req.body
 
-    User.findOneAndUpdate({ username: req.params.username }, { $set: userData }, function(error, user) {
+    User.findOneAndUpdate({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]}, { $set: userData }, function(error, user) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your update request')
         } else {
@@ -28,7 +28,7 @@ exports.update = function(req, res) {
 }
 
 exports.one = function(req, res) {
-    User.findOne({ username: req.params.username })
+    User.findOne({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]})
     .populate('age_range')
     .exec(function(error, user) {
             if (error) {
@@ -146,7 +146,7 @@ exports.login = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-    User.findOneAndRemove({ username: req.params.username }, function(error, result) {
+    User.findOneAndRemove({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]}, function(error, result) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your delete request')
         } else {
