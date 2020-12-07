@@ -8,6 +8,7 @@ const healthTopicSchema = new Schema({
     _id: { type: String },
     name: { type: String, unique: true, required: true },
     description: { type: String, required: true },
+    censor: [{ type: String, required: true, ref: 'ageRange' }],
     medical_field: { type: Schema.Types.String, ref: 'medicalField', default: 'General' },
 })
 
