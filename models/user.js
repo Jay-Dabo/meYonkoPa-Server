@@ -2,13 +2,6 @@ const mongoose = require('mongoose'); // Require Mongooge for connection to Data
 const Schema = mongoose.Schema // Require Schema Instace of Mongoose
 const bcrypt = require('bcryptjs'); // Require BCrypt for Password encryption
 
-// Age Enumerations
-// const ageRanges = Object.freeze({
-//     Child: '10+',
-//     Teen: '16+',
-//     Adult: '20+',
-// });
-
 // Gender Enumerations
 const genders = Object.freeze({
     Male: 'Male',

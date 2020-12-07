@@ -33,9 +33,9 @@ router.get('/', (req, res) => {
 // Routings for Users
 router.get('/users', User.all);
 router.get('/users/:username', User.one);
-router.post('/user/login', User.login);
+router.post('/user/login/', User.login);
 router.patch('/users/:username', User.update);
-router.delete('/users/:username', User.delete);
+router.delete('/users/:phone_number', User.delete);
 router.post('/user/register', User.register);
 
 // Routings for Professionals
@@ -57,11 +57,16 @@ router.delete('/ageRanges/:_id', AgeRange.delete);
 router.get('/medical-fields', MedicalField.all);
 router.get('/medical-fields/:_id', MedicalField.one);
 router.post('/medical-field/new', MedicalField.new);
+router.patch('/medical-fields/:_id', MedicalField.update);
+router.delete('/medical-fields/:_id', MedicalField.delete);
 
 // Routing for Health Topics
 router.get('/health-topics', HealthTopic.all);
 router.get('/health-topics/:_id', HealthTopic.one);
 router.post('/health-topic/new', HealthTopic.new);
+router.patch('/health-topics/:_id', HealthTopic.update);
+router.delete('/health-topics/:_id', HealthTopic.delete);
+router.get('/health-topic/:censor', HealthTopic.common);
 
 // Routings for Articles
 router.get('/articles', Article.all);

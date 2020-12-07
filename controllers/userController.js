@@ -18,7 +18,7 @@ exports.all = function(req, res) {
 exports.update = function(req, res) {
     let userData = req.body
 
-    User.findOneAndUpdate({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]}, { $set: userData }, function(error, user) {
+    User.findOneAndUpdate({ phone_number: req.params.phone_number }, { $set: userData }, function(error, user) {
         if (error) {
             return res.status(422).send('Oops! Something went wrong with your update request')
         } else {
@@ -28,7 +28,7 @@ exports.update = function(req, res) {
 }
 
 exports.one = function(req, res) {
-    User.findOne({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]})
+    User.findOne({ phone_number: req.params.phone_number })
     .populate('age_range')
     .exec(function(error, user) {
             if (error) {
@@ -111,7 +111,7 @@ exports.register = function(req, res) {
 
 exports.login = function(req, res) {
     let userData = req.body
-    var userid;
+    var userid = userData.phone_number;
     // let userid = userData.username
 
     // Presence Verification
@@ -119,38 +119,68 @@ exports.login = function(req, res) {
     //     return res.status(422).send('Please provide your email or phone number')
     // }
 
-    // if (!userData.email) {
-    //     return res.status(422).send('Please provide your Email')
-    // }
+    if (!userid) {
+        return res.status(422).send('Please provide your email or phone_number')
+    }
     
     if (!userData.password) {
         return res.status(422).send('Please provide your Password')
     }
 
 
-    User.findOne({$or: [{ userid: userData.phone_number }, { userid: userData.email }]}, (error, user) => {
-        if (error) {
-            return res.status(422).send('Oops! Something went wrong. Please try again.')
-        }
+    if (userid.indexOf('@') !== -1) {
+        User.findOne({ email: userid }, (error, user) => {
+            if (error) {
+                return res.status(422).send('Oops! Something went wrong. Please try again.')
+            }
 
-        if (!user) {
-            return res.status(401).send('Sorry!! You do not have an account with us. You should consider registering first.')
-        }
+            if (!user) {
+                return res.status(401).send('Sorry!! You do not have an account with us. You should consider registering first.')
+            }
 
-        if (!user.hasSamePassword(userData.password)) {
-            return res.status(401).send('Invalid Password')
-        } else {
-            return res.status(200).json(user)
-        }
-    });
+            if (!user.hasSamePassword(userData.password)) {
+                return res.status(401).send('Invalid Password')
+            } else {
+                return res.status(200).json(user)
+            }
+        });
+    } else {
+        User.findOne({ phone_number: userid }, (error, user) => {
+            if (error) {
+                return res.status(422).send('Oops! Something went wrong. Please try again.')
+            }
+
+            if (!user) {
+                return res.status(401).send('Sorry!! You do not have an account with us. You should consider registering first.')
+            }
+
+            if (!user.hasSamePassword(userData.password)) {
+                return res.status(401).send('Invalid Password')
+            } else {
+                return res.status(200).json(user)
+            }
+        });
+    }
 }
 
 exports.delete = function(req, res) {
-    User.findOneAndRemove({$or: [{ phone_number: req.params.phone_number }, { email: req.params.email }]}, function(error, result) {
-        if (error) {
-            return res.status(422).send('Oops! Something went wrong with your delete request')
-        } else {
-            return res.status(200).send('You have successfully deleted this user')
-        }
-    });
+    var param = req.params.phone_number
+
+    if (param.indexOf('@') !== -1) {
+        User.findOneAndRemove({ email: param }, function(error, result) {
+            if (error) {
+                return res.status(422).send('Oops! Something went wrong with your delete request')
+            } else {
+                return res.status(200).send('You have successfully deleted this user')
+            }
+        });
+    } else {
+        User.findOneAndRemove({ phone_number: param }, function(error, result) {
+            if (error) {
+                return res.status(422).send('Oops! Something went wrong with your delete request')
+            } else {
+                return res.status(200).send('You have successfully deleted this user')
+            }
+        });
+    }
 }
