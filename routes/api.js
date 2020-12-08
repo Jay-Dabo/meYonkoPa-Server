@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 router.get('/users', User.all);
 router.get('/users/:username', User.one);
 router.post('/user/login/', User.login);
-router.patch('/users/:username', User.update);
+router.patch('/users/:phone_number', User.update);
 router.delete('/users/:phone_number', User.delete);
 router.post('/user/register', User.register);
 
@@ -67,6 +67,7 @@ router.post('/health-topic/new', HealthTopic.new);
 router.patch('/health-topics/:_id', HealthTopic.update);
 router.delete('/health-topics/:_id', HealthTopic.delete);
 router.get('/health-topic/:censor', HealthTopic.common);
+router.get('/health-topics-latest/:censor', HealthTopic.latest)
 
 // Routings for Articles
 router.get('/articles', Article.all);
@@ -75,6 +76,7 @@ router.get('/articles/:_id', Article.one);
 router.patch('/articles/:_id', Article.update);
 router.delete('/articles/:_id', Article.delete);
 router.get('/article/:censor', Article.common);
+// router.get('/articles-latest/:censor', Article.latest);
 
 // Test Routings for Chats
 router.get('/consult-professional', Consult.consultProfessional)

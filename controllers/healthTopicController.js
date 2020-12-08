@@ -1,5 +1,6 @@
 // Model Imports
 const HealthTopic = require('../models/healthTopic')
+const Article = require('../models/article');
 
 // API Routing Functions
 exports.all = function(req, res) {
@@ -34,6 +35,27 @@ exports.common = function(req, res) {
             return res.status(200).json(healthTopics)
         }
     });
+}
+
+exports.latest = function(req, res) {
+    const querystr = req.params.censor
+
+    HealthTopic.find({ censor: querystr }, function(error, healthTopics) {
+        if (error) {
+            return res.status(422).send('Sorry no Health Topic currently exists for this age group')
+        } else {
+            Article.find({ censor: querystr }).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
+                if (error) {
+                    return res.status(422).send('Sorry!! Article list cannot be relayed to you now.')
+                } else {
+                    return res.status(200).json({
+                        healthTopics, articles
+                    })
+                }
+            });
+        }
+    });
+    
 }
 
 exports.new = function(req, res) {

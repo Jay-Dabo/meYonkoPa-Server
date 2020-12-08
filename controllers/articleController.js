@@ -22,6 +22,16 @@ exports.common = function(req, res) {
     });
 }
 
+// exports.latest = function(req, res) { 
+//     Article.find({censor: req.params.censor}).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
+//         if (error) {
+//             return res.status(422).send('Sorry!! Article list cannot be relayed to you now.')
+//         } else {
+//             return res.status(200).json(articles)
+//         }
+//     });
+// }
+
 exports.update = function(req, res) {
     let articleData = req.body
 
