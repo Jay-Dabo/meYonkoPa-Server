@@ -1,4 +1,4 @@
-// const path = require('path')
+const path = require('path')
 const http = require('http')
 const socketio = require('socket.io'); // Require Web Sockets for communication
 const express = require('express'); // Require Express as Web Server 
@@ -18,7 +18,7 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 // Static File Routing, Morgan and Cross-Site Scripting
-// app.use(express.static(path.join(__dirname, 'public'))) 
+app.use(express.static(path.join(__dirname, 'public'))) 
 app.use(morgan('dev')) 
 app.use(cors()) // Cors for Cross-Site Scripting
 
