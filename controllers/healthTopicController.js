@@ -39,35 +39,45 @@ exports.common = function(req, res) {
 
 exports.latest = function(req, res) {
     const querystr = req.params.censor
-
     HealthTopic.find({ censor: querystr }, function(error, healthTopics) {
         if (error) {
             return res.status(422).send('Sorry no Health Topic currently exists for this age group')
         } else {
-             //set the appropriate HTTP header
-            res.setHeader('Content-Type', 'text/html');
-
-            for (var i = 0; i < healthTopics.length; i++) {            
-                Article.find({$and: [{ censor: querystr }, { category: healthTopics[i]._id }]}).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
-                // Article.find({ censor: querystr }).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
-                    if (error) {
-                        res.status(422).send('Sorry!! Article list cannot be relayed to you now.');
-                        return;
-                    } else {
-                        res.status(200).json({
-                            healthTopics, articles
-                        })
-                        return;
-                    }
-                });
-
-                res.end();
-            }
-
+            Article.find({ censor: querystr }).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
+                if (error) {
+                    return res.status(422).send('Sorry!! The latest article list cannot be relayed to you now.');
+                } else {
+                    return res.status(200).json({
+                        healthTopics, articles
+                    })
+                }
+            });
         }
     });
-    
 }
+
+// exports.latest = function(req, res) {
+//     const querystr = req.params.censor
+//     HealthTopic.find({ censor: querystr }, function(error, healthTopics) {
+//         if (error) {
+//             return res.status(422).send('Sorry no Health Topic currently exists for this age group')
+//         } else {
+//             for (var i = 0; i < healthTopics.length; i++) {            
+//                 Article.find({$and: [{ censor: querystr }, { category: healthTopics[i]._id }]}).sort({'createdAt' : -1}).limit(10).exec((error, articles) => {
+//                     if (error) {
+//                         res.status(422).send('Sorry!! The latest article list cannot be relayed to you now.');
+//                     } else {
+//                         // return res.status(200).json({
+//                         //     healthTopics, articles
+//                         // })
+
+//                         console.log(articles)
+//                     }
+//                 });
+//             }
+//         }
+//     });
+// }
 
 exports.new = function(req, res) {
     let healthTopicData = req.body

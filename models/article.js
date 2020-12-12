@@ -16,6 +16,7 @@ const articleSchema = new Schema({
     censor: [{ type: String, required: true, ref: 'ageRange' }],
     category: { type: Schema.Types.String, ref: 'healthTopic', default: 'G.Health' },
     author: { type: Schema.Types.String, ref: 'professional', default: 'meYonkoPa' },
+    url: { type: String, required: true }
 },
 { 
     timestamps: true 

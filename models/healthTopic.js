@@ -10,6 +10,7 @@ const healthTopicSchema = new Schema({
     description: { type: String, required: true },
     censor: [{ type: String, required: true, ref: 'ageRange' }],
     medical_field: { type: Schema.Types.String, ref: 'medicalField', default: 'General' },
+    url: { type: String, required: true }
 })
 
 // Export Model with the Category schema into Category Collection on MongoDb
